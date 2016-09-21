@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    <tabs>
+        <tab
+            id="@+id/tab_auto"
+            icon="@drawable/ic_play_button"
+            title="Autonomo"
+            barColorWhenSelected="@color/primary" />
+        <tab
+            id="@+id/tab_control"
+            icon="@drawable/ic_videogame_black"
+            title="Controle"
+            barColorWhenSelected="@color/primary" />
+        <tab
+            id="@+id/tab_sensors"
+            icon="@drawable/ic_sensor"
+            title="Sensores"
+            barColorWhenSelected="@color/primary" />
+    </tabs>
+</PreferenceScreen>

@@ -23,6 +23,8 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:24.2.0'
+    compile 'com.android.support:design:24.2.0'
+    compile 'com.roughike:bottom-bar:2.0.2'
     compile files('libs/android-core.jar')
     compile files('libs/controlP5.jar')
 }

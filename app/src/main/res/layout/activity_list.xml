@@ -4,18 +4,19 @@
     android:layout_height="match_parent"
     android:weightSum="1">
 
+    <include layout="@layout/toolbar" />
+
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Dispositivos Pareados"
         android:gravity="center"
         android:id="@+id/textView2"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="0.14" />
+        android:layout_gravity="center_horizontal" />
 
     <ListView
-        android:layout_width="match_parent"
-        android:layout_height="412dp"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
         android:id="@+id/listView_bt" />
 </LinearLayout>

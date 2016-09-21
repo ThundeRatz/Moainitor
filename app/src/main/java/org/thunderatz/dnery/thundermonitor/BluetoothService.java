@@ -64,15 +64,12 @@ public class BluetoothService {
     // Member fields
     private final BluetoothAdapter mAdapter;
     private final Handler mHandler;
-//    private AcceptThread mSecureAcceptThread;
-//    private AcceptThread mInsecureAcceptThread;
     private ConnectThread mConnectThread;
     private ConnectedThread mConnectedThread;
     private int mState;
 
     // Constants that indicate the current connection state
     public static final int STATE_NONE = 0;       // we're doing nothing
-//    public static final int STATE_LISTEN = 1;     // now listening for incoming connections
     public static final int STATE_CONNECTING = 2; // now initiating an outgoing connection
     public static final int STATE_CONNECTED = 3;  // now connected to a remote device
 
@@ -83,7 +80,6 @@ public class BluetoothService {
      * @param handler A Handler to send messages back to the UI Activity
      */
     public BluetoothService(Context context, Handler handler) {
-        Log.d(TAG, "=== Entering constructor ===");
         mAdapter = BluetoothAdapter.getDefaultAdapter();
         mState = STATE_NONE;
         mHandler = handler;
@@ -127,18 +123,6 @@ public class BluetoothService {
             mConnectedThread.cancel();
             mConnectedThread = null;
         }
-
-//        setState(STATE_LISTEN);
-
-        // Start the thread to listen on a BluetoothServerSocket
-//        if (mSecureAcceptThread == null) {
-//            mSecureAcceptThread = new AcceptThread(true);
-//            mSecureAcceptThread.start();
-//        }
-//        if (mInsecureAcceptThread == null) {
-//            mInsecureAcceptThread = new AcceptThread(false);
-//            mInsecureAcceptThread.start();
-//        }
     }
 
     /**
@@ -192,16 +176,6 @@ public class BluetoothService {
             mConnectedThread = null;
         }
 
-        // Cancel the accept thread because we only want to connect to one device
-//        if (mSecureAcceptThread != null) {
-//            mSecureAcceptThread.cancel();
-//            mSecureAcceptThread = null;
-//        }
-//        if (mInsecureAcceptThread != null) {
-//            mInsecureAcceptThread.cancel();
-//            mInsecureAcceptThread = null;
-//        }
-
         // Start the thread to manage the connection and perform transmissions
         mConnectedThread = new ConnectedThread(socket, socketType);
         mConnectedThread.start();
@@ -232,15 +206,6 @@ public class BluetoothService {
             mConnectedThread = null;
         }
 
-//        if (mSecureAcceptThread != null) {
-//            mSecureAcceptThread.cancel();
-//            mSecureAcceptThread = null;
-//        }
-//
-//        if (mInsecureAcceptThread != null) {
-//            mInsecureAcceptThread.cancel();
-//            mInsecureAcceptThread = null;
-//        }
         setState(STATE_NONE);
     }
 
