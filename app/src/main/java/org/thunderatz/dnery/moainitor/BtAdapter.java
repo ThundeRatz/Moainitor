@@ -1,4 +1,4 @@
-package org.thunderatz.dnery.thundermonitor;
+package org.thunderatz.dnery.moainitor;
 
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;

@@ -1,7 +1,7 @@
-package org.thunderatz.dnery.thundermonitor.Processing;
+package org.thunderatz.dnery.moainitor.Processing;
 
-import org.thunderatz.dnery.thundermonitor.Constants;
-import org.thunderatz.dnery.thundermonitor.MainActivity;
+import org.thunderatz.dnery.moainitor.Constants;
+import org.thunderatz.dnery.moainitor.MainActivity;
 
 import processing.core.PApplet;
 

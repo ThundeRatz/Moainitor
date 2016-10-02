@@ -1,4 +1,4 @@
-# ThunderMonitor
+# moainitor
 
 Android app to monitor some of the team's autonomous robots through bluetooth.
 

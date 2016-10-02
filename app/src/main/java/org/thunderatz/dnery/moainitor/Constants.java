@@ -1,6 +1,4 @@
-package org.thunderatz.dnery.thundermonitor;
-
-import processing.core.PApplet;
+package org.thunderatz.dnery.moainitor;
 
 public interface Constants {
     // Message types sent from the BluetoothService Handler
@@ -15,31 +13,38 @@ public interface Constants {
     String TOAST = "toast";
 
     // Packet masks
-    byte PACKET_HEADER   = (byte)0xFF;
-    byte PACKET_TAIL     = (byte)0xFE;
+    int PACKET_HEADER   = 0xFF;
+    int PACKET_TAIL     = 0xFE;
 
     // Sent Packets
     // Commands
-    byte CMD_SET_MOTORS   = (byte)0x02;
-    byte CMD_SET_STRATEGY = (byte)0x03;
-    byte CMD_SET_MODE     = (byte)0x04;
-    byte CMD_START_AUTO   = (byte)0x05;
+    byte CMD_SET_MOTORS   = (byte)0x10;
+    byte CMD_SET_STRATEGY = (byte)0x20;
+    byte CMD_SET_MODE     = (byte)0x30;
+    byte CMD_START_AUTO   = (byte)0x40;
 
     // Motor Directions
     byte MOT_FRENTE = (byte)0x00;
     byte MOT_TRAS   = (byte)0x01;
 
     // Packet Sizes
-    byte PACKET_SIZE_SET_MOTORS   = (byte)0x08;
+    byte PACKET_SIZE_SET_MOTORS   = (byte)0x05;
     byte PACKET_SIZE_SET_STRATEGY = (byte)0x05;
     byte PACKET_SIZE_SET_MODE     = (byte)0x05;
     byte PACKET_SIZE_START_AUTO   = (byte)0x04;
 
+    // SET_MOTORS
+    byte PACKET_BUTTON_UP    = (byte)0x01;
+    byte PACKET_BUTTON_DOWN  = (byte)0x02;
+    byte PACKET_BUTTON_LEFT  = (byte)0x04;
+    byte PACKET_BUTTON_RIGHT = (byte)0x08;
+    byte PACKET_BUTTON_STOP  = (byte)0x10;
+
     // Received Packets
     // Sensors
-    byte SENSOR_DISTANCE = (byte)0x02;
-    byte SENSOR_LINE     = (byte)0x03;
-    byte BATTERY_LEVEL   = (byte)0x04;
+    byte SENSOR_DISTANCE = (byte)0x50;
+    byte SENSOR_LINE     = (byte)0x60;
+    byte BATTERY_LEVEL   = (byte)0x70;
 
     // Packet Sizes
     byte PACKET_SIZE_SENSOR  = (byte)0x06;

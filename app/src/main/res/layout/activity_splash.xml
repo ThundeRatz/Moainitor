@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textSize="36dp"
-        android:text="ThunderMonitor"
+        android:text="@string/app_name"
         android:textColor="#CCCCCC"
         android:id="@+id/textView"
         android:layout_alignParentTop="true"

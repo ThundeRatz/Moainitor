@@ -1,4 +1,4 @@
-package org.thunderatz.dnery.thundermonitor;
+package org.thunderatz.dnery.moainitor;
 
 /**
  * Created by dnery on 23/08/2016.

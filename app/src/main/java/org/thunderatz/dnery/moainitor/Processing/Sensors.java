@@ -1,7 +1,8 @@
-package org.thunderatz.dnery.thundermonitor.Processing;
+package org.thunderatz.dnery.moainitor.Processing;
 
-import org.thunderatz.dnery.thundermonitor.Constants;
-import org.thunderatz.dnery.thundermonitor.MainActivity;
+import org.thunderatz.dnery.moainitor.BluetoothService;
+import org.thunderatz.dnery.moainitor.Constants;
+import org.thunderatz.dnery.moainitor.MainActivity;
 
 import processing.core.PApplet;
 import processing.core.PFont;
@@ -48,6 +49,7 @@ public class Sensors extends PApplet {
 
     public void draw() {
         background(255);
+        checkBluetooth();
         distanceSensors.show();
         lineSensors.show();
         battery.show();
@@ -59,8 +61,18 @@ public class Sensors extends PApplet {
         textFont(font);
         textAlign(PApplet.LEFT, PApplet.CENTER);
         textSize(0.06f * height);
-        text("L: " + nf((int)lSpeed,    3, 0), 0.05f * width, 0.08f * height);
-        text("R: " + nf((int)rSpeed,    3, 0), 0.05f * width, 0.15f * height);
+        text("L: " + nf(m.lSpeed,    3, 0), 0.05f * width, 0.08f * height);
+        text("R: " + nf(m.rSpeed,    3, 0), 0.05f * width, 0.15f * height);
+    }
+
+    private boolean checkBluetooth() {
+        if ((m.mBtService.getState() == BluetoothService.STATE_CONNECTED))
+            return true;
+
+        fill(255, 0, 0);
+        noStroke();
+        ellipse(0.95f * width, 0.03f * height, 50, 50);
+        return false;
     }
 
     private class DistanceSensors {
@@ -78,7 +90,7 @@ public class Sensors extends PApplet {
 
             bars = new DistanceSensorBar[7];
             for (int i = 0; i < 7; i++)
-                bars[i] = new DistanceSensorBar("PC" + i, xE + i*w/7f, yC, w/7f, h);
+                bars[i] = new DistanceSensorBar("PC" + i, xE + i*w/7f, yC, w/7f, h, i);
         }
 
         public void show() {
@@ -88,11 +100,12 @@ public class Sensors extends PApplet {
 
         private class DistanceSensorBar {
             private String port;
-            private int value;
+            private int value, index;
 
             float xE, xD, yC, yB, w, h;
 
-            public DistanceSensorBar(String port, float xE, float yC, float w, float h) {
+            public DistanceSensorBar(String port, float xE, float yC, float w, float h, int index) {
+                this.index = index;
                 this.port = port;
                 this.xE = xE;
                 this.yC = yC;
@@ -106,6 +119,8 @@ public class Sensors extends PApplet {
             }
 
             public void show() {
+                value = m.distances[index];
+
                 fill(Constants.COLOR_BLACK);
                 textFont(font);
                 textSize(0.07f * h);
@@ -138,10 +153,10 @@ public class Sensors extends PApplet {
             yB = yC + h;
 
             circles = new LineSensorCircle[4];
-            circles[0] = new LineSensorCircle("PB0", xE, yC, w/7f, h);
-            circles[1] = new LineSensorCircle("PB1", xE + 2*w/7f, yC, w/7f, h);
-            circles[2] = new LineSensorCircle("PB2", xE + 4*w/7f, yC, w/7f, h);
-            circles[3] = new LineSensorCircle("PB3", xE + 6*w/7f, yC, w/7f, h);
+            circles[0] = new LineSensorCircle("PB0", xE, yC, w/7f, h, 0);
+            circles[1] = new LineSensorCircle("PB1", xE + 2*w/7f, yC, w/7f, h, 1);
+            circles[2] = new LineSensorCircle("PB2", xE + 4*w/7f, yC, w/7f, h, 2);
+            circles[3] = new LineSensorCircle("PB3", xE + 6*w/7f, yC, w/7f, h, 3);
         }
 
         public void show() {
@@ -151,11 +166,12 @@ public class Sensors extends PApplet {
 
         private class LineSensorCircle {
             private String port;
-            private int value;
+            private int value, index;
 
             float xE, xD, yC, yB, w, h;
 
-            public LineSensorCircle(String port, float xE, float yC, float w, float h) {
+            public LineSensorCircle(String port, float xE, float yC, float w, float h, int index) {
+                this.index = index;
                 this.port = port;
                 this.xE = xE;
                 this.yC = yC;
@@ -169,6 +185,8 @@ public class Sensors extends PApplet {
             }
 
             public void show() {
+                value = m.line[index];
+
                 fill(Constants.COLOR_BLACK);
                 textFont(font);
                 textSize(0.1f * h);
@@ -218,6 +236,8 @@ public class Sensors extends PApplet {
         }
 
         public void show() {
+            val = m.battery;
+
             shape(bat);
             rectangles();
             fill(Constants.COLOR_BLACK);
@@ -231,14 +251,14 @@ public class Sensors extends PApplet {
             float _w = 0.82f/3 * w, _h = 0.9f * h,_y = yC + 0.05f * h;
             noStroke();
             if (val <= 3.7f) {
-                fill(255, 0, 0);
+                fill(0xFFF44336);
                 rect(xE + 0.03f * w, _y, _w, _h);
             } else if (val < 4.0f) {
-                fill(255, 255, 0);
+                fill(0xFFFFEB3B);
                 rect(xE + 0.03f * w, _y, _w, _h);
                 rect(xE + 0.06f * w + _w, _y, _w, _h);
             } else {
-                fill(0, 255, 0);
+                fill(0xFF4CAF50);
                 rect(xE + 0.03f * w, _y, _w, _h);
                 rect(xE + 0.06f * w + _w, _y, _w, _h);
                 rect(xE + 0.09f * w + 2*_w, _y, _w, _h);

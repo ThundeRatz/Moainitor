@@ -1,4 +1,4 @@
-package org.thunderatz.dnery.thundermonitor;
+package org.thunderatz.dnery.moainitor;
 
 import org.junit.Test;
 
