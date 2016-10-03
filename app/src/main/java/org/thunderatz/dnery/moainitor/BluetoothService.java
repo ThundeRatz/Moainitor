@@ -15,20 +15,19 @@
  */
 
 /*
- * moainitor
+ * Moainitor
  *
  * Modified by: Daniel Nery Silva de Oliveira
  *
  * 05/09/2016
  *
- * ThundeRatz
+ * Equipe ThundeRatz de Robotica
  */
 
 package org.thunderatz.dnery.moainitor;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.os.Bundle;

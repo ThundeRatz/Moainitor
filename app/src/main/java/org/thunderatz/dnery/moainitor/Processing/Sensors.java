@@ -1,4 +1,4 @@
-package org.thunderatz.dnery.moainitor.Processing;
+package org.thunderatz.dnery.moainitor.processing;
 
 import org.thunderatz.dnery.moainitor.BluetoothService;
 import org.thunderatz.dnery.moainitor.Constants;
@@ -9,8 +9,15 @@ import processing.core.PFont;
 import processing.core.PShape;
 
 /**
- * Created by dnery on 18/09/2016.
+ * Sensors.java
+ * Processing fragment for sensors monitoring
+ *
+ * Autor: Daniel Nery Silva de Oliveira
+ *
+ * Equipe ThundeRatz de Robotica
+ * 02/10/2016
  */
+
 public class Sensors extends PApplet {
     private static final String TAG = "RC";
 
@@ -23,19 +30,14 @@ public class Sensors extends PApplet {
 
     private int lSpeed, rSpeed;
 
-    public Sensors() {
-        this.m = null;
-    }
-
-    public Sensors(MainActivity m) {
-        this.m = m;
-    }
+    public Sensors() {}
 
     public void settings() {
-        size(displayWidth, displayHeight);
+        size(displayWidth, displayHeight, P2D);
     }
 
     public void setup() {
+        this.m = (MainActivity) getActivity();
         if (m == null)
             throw new RuntimeException("M is null");
 

@@ -2,17 +2,19 @@ package org.thunderatz.dnery.moainitor;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.os.Bundle;
-
 import android.app.FragmentManager;
-import android.bluetooth.*;
 
-import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+
+import android.content.Intent;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
+
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
@@ -21,16 +23,23 @@ import android.widget.Toolbar;
 
 import java.util.ArrayList;
 import java.util.Set;
-import java.util.UUID;
 
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
 
-import org.thunderatz.dnery.moainitor.Processing.Auto;
-import org.thunderatz.dnery.moainitor.Processing.RC;
-import org.thunderatz.dnery.moainitor.Processing.Sensors;
+import org.thunderatz.dnery.moainitor.processing.Auto;
+import org.thunderatz.dnery.moainitor.processing.RC;
+import org.thunderatz.dnery.moainitor.processing.Sensors;
 
-import processing.core.PApplet;
+/**
+ * MainActivity.java
+ * Moainitor Main Activity
+ *
+ * Autor: Daniel Nery Silva de Oliveira
+ *
+ * Equipe ThundeRatz de Robotica
+ * 02/10/2016
+ */
 
 public class MainActivity extends Activity {
     private static final String TAG = "MainActivity";
@@ -131,15 +140,15 @@ public class MainActivity extends Activity {
                     // The tab with id R.id.tab_favorites was selected,
                     // change your content accordingly.
                     case R.id.tab_auto:
-                        currentSketch = new Auto(MainActivity.this);
+                        currentSketch = new Auto();
                         break;
 
                     case R.id.tab_control:
-                        currentSketch = new RC(MainActivity.this);
+                        currentSketch = new RC();
                         break;
 
                     case R.id.tab_sensors:
-                        currentSketch = new Sensors(MainActivity.this);
+                        currentSketch = new Sensors();
                         break;
                 }
                 fragmentManager.beginTransaction()

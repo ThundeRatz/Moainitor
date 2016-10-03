@@ -1,13 +1,19 @@
 package org.thunderatz.dnery.moainitor;
 
-/**
- * Created by dnery on 23/08/2016.
- */
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+
+/**
+ * Splash.java
+ * Moainitor Splash screen
+ *
+ * Autor: Daniel Nery Silva de Oliveira
+ *
+ * Equipe ThundeRatz de Robotica
+ * 02/10/2016
+ */
 
 public class Splash extends Activity {
     private final static int SPLASH_TIME_OUT = 3000;

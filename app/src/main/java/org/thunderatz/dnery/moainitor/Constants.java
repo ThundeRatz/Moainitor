@@ -1,5 +1,15 @@
 package org.thunderatz.dnery.moainitor;
 
+/**
+ * Constants.java
+ * Set project-wide constants
+ *
+ * Autor: Daniel Nery Silva de Oliveira
+ *
+ * Equipe ThundeRatz de Robótica
+ * 02/10/2016
+ */
+
 public interface Constants {
     // Message types sent from the BluetoothService Handler
     int MESSAGE_STATE_CHANGE = 1;
@@ -22,6 +32,7 @@ public interface Constants {
     byte CMD_SET_STRATEGY = (byte)0x20;
     byte CMD_SET_MODE     = (byte)0x30;
     byte CMD_START_AUTO   = (byte)0x40;
+    byte CMD_STOP         = (byte)0x80;
 
     // Motor Directions
     byte MOT_FRENTE = (byte)0x00;
@@ -32,6 +43,7 @@ public interface Constants {
     byte PACKET_SIZE_SET_STRATEGY = (byte)0x05;
     byte PACKET_SIZE_SET_MODE     = (byte)0x05;
     byte PACKET_SIZE_START_AUTO   = (byte)0x04;
+    byte PACKET_SIZE_STOP         = (byte)0x04;
 
     // SET_MOTORS
     byte PACKET_BUTTON_UP    = (byte)0x01;

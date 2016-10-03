@@ -11,8 +11,16 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 /**
- * Created by dnery on 26/08/2016.
+ * BtAdapter.java
+ * ArrayAdapter for Bluetooth Devices
+ * Shows Device Name and MAC address
+ *
+ * Autor: Daniel Nery Silva de Oliveira
+ *
+ * Equipe ThundeRatz de Robotica
+ * 02/10/2016
  */
+
 public class BtAdapter extends ArrayAdapter<BluetoothDevice> {
     public BtAdapter(Context context, ArrayList<BluetoothDevice> bluetoothDevices) {
         super(context, 0, bluetoothDevices);

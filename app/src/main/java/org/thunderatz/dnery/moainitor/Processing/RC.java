@@ -1,4 +1,4 @@
-package org.thunderatz.dnery.moainitor.Processing;
+package org.thunderatz.dnery.moainitor.processing;
 
 import android.util.Log;
 
@@ -12,8 +12,15 @@ import processing.core.PImage;
 import processing.core.PShape;
 
 /**
- * Created by dnery on 18/09/2016.
+ * RC.java
+ * Processing fragment for Moai's 'Radio' Control mode
+ *
+ * Autor: Daniel Nery Silva de Oliveira
+ *
+ * Equipe ThundeRatz de Robotica
+ * 02/10/2016
  */
+
 public class RC extends PApplet {
     private static final String TAG = "RC";
     private static final int MINX = -250;
@@ -34,19 +41,14 @@ public class RC extends PApplet {
 
     public boolean overE, overC, overD, overB, overS;
 
-    public RC() {
-        this.m = null;
-    }
-
-    public RC(MainActivity m) {
-        this.m = m;
-    }
+    public RC() {}
 
     public void settings() {
         size(displayWidth, displayHeight, P2D);
     }
 
     public void setup() {
+        this.m = (MainActivity) getActivity();
         if (m == null)
             throw new RuntimeException("M is null");
 
