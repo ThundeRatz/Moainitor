@@ -61,6 +61,8 @@ public class MainActivity extends Activity {
     public int lSpeed, rSpeed;
     public int distances[], line[];
     public float battery;
+    public int currentStrategy;
+    public int currentState;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -233,17 +235,17 @@ public class MainActivity extends Activity {
     public void parseBuf() {
         int index, value;
         switch (readBuf[2]) {
-            case Constants.CMD_SET_MOTORS:
+            case Constants.ANS_MOTORS:
                 lSpeed = readBuf[4];
                 rSpeed = readBuf[6];
 
                 if (readBuf[3] == Constants.MOT_TRAS)
-                    lSpeed = -lSpeed;
+                    lSpeed = lSpeed * (-1);
                 if (readBuf[5] == Constants.MOT_FRENTE)
-                    rSpeed = -rSpeed;
+                    rSpeed = rSpeed * (-1);
                 break;
 
-            case Constants.SENSOR_DISTANCE:
+            case Constants.ANS_SENSOR_DISTANCE:
                 index = readBuf[3];
 
                 if (index >= distances.length)
@@ -253,7 +255,7 @@ public class MainActivity extends Activity {
                 distances[index] = value;
                 break;
 
-            case Constants.SENSOR_LINE:
+            case Constants.ANS_SENSOR_LINE:
                 index = readBuf[3];
 
                 if (index >= line.length)
@@ -263,9 +265,17 @@ public class MainActivity extends Activity {
                 line[index] = value;
                 break;
 
-            case Constants.BATTERY_LEVEL:
+            case Constants.ANS_BATTERY:
                 value = readBuf[3];
                 battery = (300 + value) / 100f;
+                break;
+
+            case Constants.ANS_STRATEGY:
+                currentStrategy = readBuf[3];
+                break;
+
+            case Constants.ANS_STATE:
+                currentState = readBuf[3];
                 break;
         }
     }
@@ -299,5 +309,10 @@ public class MainActivity extends Activity {
                 errorExit("Error", "Bluetooth must be enabled");
             }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+
     }
 }

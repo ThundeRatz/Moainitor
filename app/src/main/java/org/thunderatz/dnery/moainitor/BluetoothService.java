@@ -391,11 +391,11 @@ public class BluetoothService {
                         continue;
                     }
 
-                    String msg = "";
-                    for (int b : buffer) {
-                        msg += " " + b;
-                    }
-                    Log.i(TAG, "Read bytes" + msg);
+//                    String msg = "";
+//                    for (int b : buffer) {
+//                        msg += " " + b;
+//                    }
+//                    Log.i(TAG, "Read bytes" + msg);
 
                     // Send the obtained bytes to the UI Activity
                     mHandler.obtainMessage(Constants.MESSAGE_READ, buffer[1], -1, buffer)

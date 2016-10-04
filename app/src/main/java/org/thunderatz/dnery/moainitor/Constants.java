@@ -22,45 +22,52 @@ public interface Constants {
     String DEVICE_NAME = "device_name";
     String TOAST = "toast";
 
-    // Packet masks
-    int PACKET_HEADER   = 0xFF;
-    int PACKET_TAIL     = 0xFE;
+    /// Packet masks
+    // Header and Tail
+    int PACKET_HEADER = 0xFF;
+    int PACKET_TAIL   = 0xFA;
 
     // Sent Packets
-    // Commands
-    byte CMD_SET_MOTORS   = (byte)0x10;
-    byte CMD_SET_STRATEGY = (byte)0x20;
-    byte CMD_SET_MODE     = (byte)0x30;
-    byte CMD_START_AUTO   = (byte)0x40;
-    byte CMD_STOP         = (byte)0x80;
+    // SET Commands
+    int CMD_SET_MOTORS   = 0x02;
+    int CMD_SET_STRATEGY = 0x04;
+    int CMD_SET_STATE    = 0x06;
+    
+    // Request Commands
+    int CMD_RQST_STATE    = 0x08;
+    int CMD_RQST_STRATEGY = 0x0A;
 
-    // Motor Directions
-    byte MOT_FRENTE = (byte)0x00;
-    byte MOT_TRAS   = (byte)0x01;
+    // Start/Stop Commands
+    int CMD_START_AUTO = 0x0C;
+    int CMD_STOP_AUTO  = 0x0E;
 
-    // Packet Sizes
-    byte PACKET_SIZE_SET_MOTORS   = (byte)0x05;
-    byte PACKET_SIZE_SET_STRATEGY = (byte)0x05;
-    byte PACKET_SIZE_SET_MODE     = (byte)0x05;
-    byte PACKET_SIZE_START_AUTO   = (byte)0x04;
-    byte PACKET_SIZE_STOP         = (byte)0x04;
-
-    // SET_MOTORS
-    byte PACKET_BUTTON_UP    = (byte)0x01;
-    byte PACKET_BUTTON_DOWN  = (byte)0x02;
-    byte PACKET_BUTTON_LEFT  = (byte)0x04;
-    byte PACKET_BUTTON_RIGHT = (byte)0x08;
-    byte PACKET_BUTTON_STOP  = (byte)0x10;
+    // SET_MOTORS buttons
+    int BUTTON_UP    = 0x01;
+    int BUTTON_DOWN  = 0x02;
+    int BUTTON_LEFT  = 0x04;
+    int BUTTON_RIGHT = 0x08;
+    int BUTTON_STOP  = 0x10;
 
     // Received Packets
     // Sensors
-    byte SENSOR_DISTANCE = (byte)0x50;
-    byte SENSOR_LINE     = (byte)0x60;
-    byte BATTERY_LEVEL   = (byte)0x70;
+    int ANS_SENSOR_LINE     = 0x12;
+    int ANS_SENSOR_DISTANCE = 0x14;
 
-    // Packet Sizes
-    byte PACKET_SIZE_SENSOR  = (byte)0x06;
-    byte PACKET_SIZE_BATTERY = (byte)0x05;
+    int ANS_BATTERY   = 0x16;
+    int ANS_STATE     = 0x18;
+    int ANS_MOTORS    = 0x1A;
+    int ANS_STRATEGY  = 0x1C;
+
+    // ANS_MOTORS motor directions
+    int MOT_FRENTE = 0x0F;
+    int MOT_TRAS   = 0xF0;
+
+    // ANS_STATE states
+    int STATE_NONE   = 0x10;
+    int STATE_AUTO_S = 0x20;
+    int STATE_AUTO_P = 0x30;
+    int STATE_RC     = 0x40;
+
 
     // Colors for Processing 0xAARRGGBB
     int COLOR_PRIMARY        = 0xFF303F9F;
@@ -72,5 +79,5 @@ public interface Constants {
     int COLOR_TEXT_ICONS     = 0xFFFFFFFF;
     int COLOR_DIVIDER        = 0xFFBDBDBD;
     int COLOR_BLACK          = 0xFF000000;
-
+    int COLOR_BACKGROUND     = 0xFFEFEFEF;
 }

@@ -38,6 +38,8 @@ public class RC extends PApplet {
     private PImage mouse;
     private ElevonMode elevonMode;
     private ButtonMode buttonMode;
+    private StateButton stateButton;
+    private StartRCButton startRCButton;
 
     public boolean overE, overC, overD, overB, overS;
 
@@ -50,19 +52,25 @@ public class RC extends PApplet {
     public void setup() {
         this.m = (MainActivity) getActivity();
         if (m == null)
-            throw new RuntimeException("M is null");
+            throw new RuntimeException(TAG + ": MainActivity is null");
 
         infoFont = createFont("Roboto-Regular.ttf", 120);
-        mouse = loadImage("brasao.png");
-        mouse.resize((int)(0.06f * width), 0);
+//        mouse = loadImage("brasao.png");
+//        mouse.resize((int)(0.06f * width), 0);
 //        elevonMode = new ElevonMode(0.05f * width, 0.3f * height, 0.9f * width, 0.9f * width);
         buttonMode = new ButtonMode(0.05f * width, 0.3f * height, 0.9f * width, 0.9f * width);
+
+        startRCButton = new StartRCButton(0.6f * width, 0.1f * height, 0.38f * width, 0.1f * height);
+        stateButton = new StateButton(0.02f * width, 0.1f * height, 0.38f * width, 0.1f * height);
     }
 
     public void draw() {
-        background(255);
+        background(Constants.COLOR_BACKGROUND);
         checkBluetooth();
+
         buttonMode.show();
+        stateButton.show();
+        startRCButton.show();
     }
 
     private boolean checkBluetooth() {
@@ -73,6 +81,18 @@ public class RC extends PApplet {
         noStroke();
         ellipse(0.95f * width, 0.03f * height, 50, 50);
         return false;
+    }
+
+    public void mouseReleased() {
+        buttonMode.mouseReleased();
+        stateButton.mouseReleased();
+        startRCButton.mouseReleased();
+    }
+
+    public void mousePressed() {
+        buttonMode.mousePressed();
+        stateButton.mousePressed();
+        startRCButton.mousePressed();
     }
 
     private class ElevonMode {
@@ -153,16 +173,16 @@ public class RC extends PApplet {
             lS = (abs(lSpeed));
             rS = (abs(rSpeed));
 
-            m.sendMessage(new int[] {
-                    Constants.PACKET_HEADER,
-                    Constants.PACKET_SIZE_SET_MOTORS,
-                    Constants.CMD_SET_MOTORS,
-                    lDir,
-                    lS,
-                    rDir,
-                    rS,
-                    Constants.PACKET_TAIL
-            });
+//            m.sendMessage(new int[] {
+//                    Constants.PACKET_HEADER,
+//                    Constants.PACKET_SIZE_SET_MOTORS,
+//                    Constants.CMD_SET_MOTORS,
+//                    lDir,
+//                    lS,
+//                    rDir,
+//                    rS,
+//                    Constants.PACKET_TAIL
+//            });
 
 //        try {
 //            Thread.sleep(5);
@@ -177,7 +197,7 @@ public class RC extends PApplet {
         PShape E, D, C, B, S;
 
 
-        public ButtonMode(float xE, float yC, float w, float h) {
+        ButtonMode(float xE, float yC, float w, float h) {
             this.xE = xE;
             this.yC = yC;
             this.w = w;
@@ -212,7 +232,6 @@ public class RC extends PApplet {
             S.setStrokeWeight(10);
             S.setStroke(Constants.COLOR_DIVIDER);
             S.setFill(0xFFF44336);
-//            S.setFill(Constants.COLOR_PRIMARY);
         }
 
         public void show() {
@@ -235,50 +254,44 @@ public class RC extends PApplet {
                 C.setFill(Constants.COLOR_PRIMARY);
                 D.setFill(Constants.COLOR_PRIMARY);
                 B.setFill(Constants.COLOR_PRIMARY);
-                text("STOP", 0.55f * width, 0.1f * height);
             } else if (overE) {
                 S.setFill(0xFFF44336);
                 E.setFill(Constants.COLOR_PRIMARY_LIGHT);
                 C.setFill(Constants.COLOR_PRIMARY);
                 D.setFill(Constants.COLOR_PRIMARY);
                 B.setFill(Constants.COLOR_PRIMARY);
-                text("ESQ", 0.55f * width, 0.1f * height);
             } else if (overC) {
                 S.setFill(0xFFF44336);
                 E.setFill(Constants.COLOR_PRIMARY);
                 C.setFill(Constants.COLOR_PRIMARY_LIGHT);
                 D.setFill(Constants.COLOR_PRIMARY);
                 B.setFill(Constants.COLOR_PRIMARY);
-                text("CIMA", 0.55f * width, 0.1f * height);
             } else if (overD) {
                 S.setFill(0xFFF44336);
                 E.setFill(Constants.COLOR_PRIMARY);
                 C.setFill(Constants.COLOR_PRIMARY);
                 D.setFill(Constants.COLOR_PRIMARY_LIGHT);
                 B.setFill(Constants.COLOR_PRIMARY);
-                text("DIR", 0.55f * width, 0.1f * height);
             } else if (overB) {
                 S.setFill(0xFFF44336);
                 E.setFill(Constants.COLOR_PRIMARY);
                 C.setFill(Constants.COLOR_PRIMARY);
                 D.setFill(Constants.COLOR_PRIMARY);
                 B.setFill(Constants.COLOR_PRIMARY_LIGHT);
-                text("BAIXO", 0.55f * width, 0.1f * height);
             } else {
                 S.setFill(0xFFF44336);
                 E.setFill(Constants.COLOR_PRIMARY);
                 C.setFill(Constants.COLOR_PRIMARY);
                 D.setFill(Constants.COLOR_PRIMARY);
                 B.setFill(Constants.COLOR_PRIMARY);
-                text("NADA", 0.55f * width, 0.1f * height);
             }
         }
 
-        public void mouseReleased() {
+        void mouseReleased() {
             overE = overC = overD = overB = overS = false;
         }
 
-        public void mousePressed() {
+        void mousePressed() {
             Log.i(TAG, mouseX + " " + mouseY + " - " + (xE + w/2) + " " + (yC + h/2) + " (" + r + ")");
             float x = mouseX - xE;
             float y = yB - mouseY;
@@ -293,24 +306,26 @@ public class RC extends PApplet {
             overB = (sqrt(sq(xE + w/2 - mouseX) + sq(yC + h/2 - mouseY)) <= r) &&
                     (x > y) && (y/(yB-yC) + x/(xD-xE)) < 1 && !overS;
 
-            if (overS) {
-                Log.i(TAG, "=== Over S");
-                sendButton(Constants.PACKET_BUTTON_STOP);
-            } else if (overE) {
-                sendButton(Constants.PACKET_BUTTON_LEFT);
-            } else if (overC) {
-                sendButton(Constants.PACKET_BUTTON_UP);
-            } else if (overD) {
-                sendButton(Constants.PACKET_BUTTON_RIGHT);
-            } else if (overB) {
-                sendButton(Constants.PACKET_BUTTON_DOWN);
-            }
+            if (!checkBluetooth())
+                return;
+
+            if (overS)
+                sendButton(Constants.BUTTON_STOP);
+            else if (overE)
+                sendButton(Constants.BUTTON_LEFT);
+            else if (overC)
+                sendButton(Constants.BUTTON_UP);
+            else if (overD)
+                sendButton(Constants.BUTTON_RIGHT);
+            else if (overB)
+                sendButton(Constants.BUTTON_DOWN);
+
         }
 
-        private void sendButton(byte button) {
+        private void sendButton(int button) {
             m.sendMessage(new int[] {
                     Constants.PACKET_HEADER,
-                    Constants.PACKET_SIZE_SET_MOTORS,
+                    0x05,
                     Constants.CMD_SET_MOTORS,
                     button,
                     Constants.PACKET_TAIL
@@ -318,11 +333,131 @@ public class RC extends PApplet {
         }
     }
 
-    public void mouseReleased() {
-        buttonMode.mouseReleased();
+    private class StateButton {
+        float xE, xD, yC, yB, w, h;
+        boolean overBtn;
+        String state;
+        PShape btn;
+
+        StateButton(float xE, float yC, float w, float h) {
+            this.xE = xE;
+            this.yC = yC;
+            this.w = w;
+            this.h = h;
+
+            this.xD = xE + w;
+            this.yB = yC + h;
+
+            overBtn = false;
+
+            btn = createShape(RECT, xE, yC, w, h);
+            btn.setStrokeWeight(10);
+            btn.setStroke(Constants.COLOR_DIVIDER);
+            btn.setFill(Constants.COLOR_PRIMARY);
+        }
+
+        void show() {
+            if (overBtn)
+                btn.setFill(Constants.COLOR_PRIMARY_LIGHT);
+            else
+                btn.setFill(Constants.COLOR_PRIMARY);
+            shape(btn);
+            fill(Constants.COLOR_TEXT_ICONS);
+            textSize(0.5f * h);
+            textAlign(PApplet.CENTER, PApplet.CENTER);
+
+            switch (m.currentState) {
+                case Constants.STATE_NONE:
+                    state = "NONE"; break;
+                case Constants.STATE_AUTO_S:
+                    state = "AUTO_S"; break;
+                case Constants.STATE_AUTO_P:
+                    state = "AUTO_P"; break;
+                case Constants.STATE_RC:
+                    state = "RC"; break;
+                default:
+                    state = "?"; break;
+            }
+
+            text(state, xE + w/2, yC + h/2);
+        }
+
+        void mousePressed() {
+            overBtn = (mouseX >= xE && mouseX <= xD && mouseY >= yC && mouseY <= yB);
+
+            if (!checkBluetooth())
+                return;
+
+            if (overBtn) {
+                m.sendMessage(new int[] {
+                        Constants.PACKET_HEADER,
+                        0x04,
+                        Constants.CMD_RQST_STATE,
+                        Constants.PACKET_TAIL
+                });
+            }
+        }
+
+        void mouseReleased() {
+            overBtn = false;
+        }
     }
 
-    public void mousePressed() {
-        buttonMode.mousePressed();
+    private class StartRCButton {
+        float xE, xD, yC, yB, w, h;
+        boolean overBtn;
+        PShape btn;
+
+        StartRCButton(float xE, float yC, float w, float h) {
+            this.xE = xE;
+            this.yC = yC;
+            this.w = w;
+            this.h = h;
+
+            this.xD = xE + w;
+            this.yB = yC + h;
+
+            overBtn = false;
+
+            btn = createShape(RECT, xE, yC, w, h);
+            btn.setStrokeWeight(10);
+            btn.setStroke(Constants.COLOR_DIVIDER);
+            btn.setFill(Constants.COLOR_PRIMARY);
+        }
+
+        void show() {
+            if (overBtn)
+                btn.setFill(Constants.COLOR_PRIMARY_LIGHT);
+            else
+                btn.setFill(Constants.COLOR_PRIMARY);
+            shape(btn);
+            fill(Constants.COLOR_TEXT_ICONS);
+            textSize(0.5f * h);
+            textAlign(PApplet.CENTER, PApplet.CENTER);
+
+            text("Start RC", xE + w/2, yC + h/2);
+        }
+
+        void mousePressed() {
+            overBtn = (mouseX >= xE && mouseX <= xD && mouseY >= yC && mouseY <= yB);
+
+            if (!checkBluetooth())
+                return;
+
+            if (overBtn) {
+                m.sendMessage(new int[] {
+                        Constants.PACKET_HEADER,
+                        0x05,
+                        Constants.CMD_SET_STATE,
+                        Constants.STATE_RC,
+                        Constants.PACKET_TAIL
+                });
+            }
+        }
+
+        void mouseReleased() {
+            overBtn = false;
+        }
     }
+
 }
