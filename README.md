@@ -1,3 +1,5 @@
+This app's features have been incorporated into [Robonitor](https://github.com/ThundeRatz/Robonitor)
+
 # Moainitor
 
 Android app to monitor team's autonomous sumo robot, Moai, through bluetooth.
